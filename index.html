@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Operación: Salvemos al Soldado Palacios!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Press+Start+2P&display=swap');
+
+        body {
+            background-color: #1a1a1a;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            overflow-x: hidden; /* Evita el scroll horizontal en móviles */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Usa min-height para que el contenido empuje la altura */
+            flex-direction: column;
+            box-sizing: border-box; /* Incluye padding y border en el ancho/alto */
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 40px;
+            background: rgba(40, 40, 40, 0.85);
+            border-radius: 25px;
+            box-shadow: 0 0 30px rgba(255, 100, 0, 0.7);
+            border: 3px solid #ff6a00;
+            margin: 20px; /* Margen para que no se pegue a los bordes en pantallas pequeñas */
+            box-sizing: border-box; /* Asegura que el padding no desborde el max-width */
+        }
+
+        h1 {
+            font-family: 'Bangers', cursive;
+            font-size: 3.5rem;
+            color: #ff9900;
+            text-shadow: 4px 4px 2px rgba(0,0,0,0.8);
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            line-height: 1.1; /* Ajuste para evitar desbordamiento en varias líneas */
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .highlight {
+            color: #ffc400;
+            font-weight: bold;
+        }
+
+        #magicButton {
+            font-family: 'Press Start 2P', cursive;
+            padding: 15px 30px;
+            font-size: 1rem;
+            color: #fff;
+            background: linear-gradient(45deg, #ff4500, #ff8c00);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s ease-out, font-size 0.2s ease-out, box-shadow 0.2s;
+            box-shadow: 0 0 20px rgba(255, 100, 0, 0.8);
+            position: relative; /* Necesario para el movimiento */
+            max-width: 90%; /* Asegura que el botón no sea demasiado ancho en móviles */
+            word-wrap: break-word; /* Rompe palabras largas si es necesario */
+        }
+        
+        #magicButton:hover {
+            box-shadow: 0 0 35px rgba(255, 165, 0, 1);
+        }
+
+        .explosion {
+            animation: explode 0.5s forwards;
+            background: #ff0000 !important;
+            color: #000 !important;
+            font-weight: bold;
+        }
+
+        @keyframes explode {
+            0% { transform: scale(1) rotate(0deg); opacity: 1; }
+            50% { transform: scale(3) rotate(20deg); opacity: 0.5; }
+            100% { transform: scale(0.1) rotate(-20deg); opacity: 0; }
+        }
+
+        /* --- MEDIA QUERIES PARA RESPONSIVIDAD --- */
+
+        /* Para tabletas y pantallas más pequeñas (ancho de hasta 768px) */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+                margin: 15px;
+            }
+
+            h1 {
+                font-size: 2.8rem; /* Tamaño de fuente más pequeño para el título */
+            }
+
+            p {
+                font-size: 1.1rem;
+            }
+
+            #magicButton {
+                padding: 12px 25px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Para teléfonos móviles (ancho de hasta 480px) */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px; /* Menos padding general */
+            }
+            .container {
+                padding: 20px;
+                border-radius: 15px; /* Bordes un poco menos pronunciados */
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 2rem; /* Aún más pequeño para móviles */
+                letter-spacing: 1px;
+            }
+
+            p {
+                font-size: 1rem;
+                margin-bottom: 20px;
+            }
+
+            #magicButton {
+                padding: 10px 20px;
+                font-size: 0.8rem;
+                max-width: 100%; /* Asegura que no sobrepase el contenedor */
+                line-height: 1.2; /* Permite que el texto se divida en varias líneas si es largo */
+                height: auto; /* Ajusta la altura automáticamente */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>¡Emergencia Gamer! Rescatemos al Palacios</h1>
+        <p>Nuestro soldado <span class="highlight">"el Palacios"</span> ha caído en combate... contra la factura del internet. 📶 Su equipo lo necesita en el Gulag de Warzone, pero sin WiFi, está destinado a ver Netflix. 😢</p>
+        <p>¡Cada donación es una bala de esperanza! Ayúdalo a volver al campo de batalla para que siga carreando a sus panas (o al menos intentándolo). ¡Su honor (y su conexión) están en juego! 🎮</p>
+        
+        <button id="magicButton">Por cada toque mi amigo es menos gay</button>
+    </div>
+
+    <script>
+        const magicButton = document.getElementById('magicButton');
+        let clickCount = 0;
+        let currentSize = 1;
+        let originalButtonText = magicButton.innerText; // Guardamos el texto original
+
+        magicButton.addEventListener('click', () => {
+            clickCount++;
+            
+            if (clickCount < 10) {
+                // Crecer un poco con cada click
+                currentSize += 0.15;
+                magicButton.style.transform = `scale(${currentSize})`;
+                
+                // Moverse a una posición aleatoria (ajustado para ser menos "agresivo" en móviles)
+                const randomX = (Math.random() * 20 - 10) * (window.innerWidth > 480 ? 1 : 0.5); // Menos movimiento en móviles
+                const randomY = (Math.random() * 20 - 10) * (window.innerWidth > 480 ? 1 : 0.5); // Menos movimiento en móviles
+                magicButton.style.top = `${randomY}px`;
+                magicButton.style.left = `${randomX}px`;
+
+            } else if (clickCount === 10) {
+                // ¡Explosión!
+                magicButton.classList.add('explosion');
+                
+                // Después de la animación, cambiar el texto y resetear
+                setTimeout(() => {
+                    magicButton.style.transform = 'scale(1.2)'; // Un poco más grande para el texto final
+                    magicButton.style.opacity = 1;
+                    magicButton.classList.remove('explosion');
+                    magicButton.innerText = "Ups, lo siento, aún seguirá siendo gay";
+                    magicButton.style.top = '0px'; // Resetea la posición
+                    magicButton.style.left = '0px'; // Resetea la posición
+                    magicButton.disabled = true; // Desactivar el botón
+                    // Opcional: para permitir un reset si quieres que jueguen de nuevo
+                    // setTimeout(() => {
+                    //     magicButton.innerText = originalButtonText;
+                    //     magicButton.disabled = false;
+                    //     clickCount = 0;
+                    //     currentSize = 1;
+                    //     magicButton.style.transform = 'scale(1)';
+                    // }, 5000); // Se resetea después de 5 segundos
+                }, 500);
+            }
+        });
+    </script>
+
+</body>
+</html>
